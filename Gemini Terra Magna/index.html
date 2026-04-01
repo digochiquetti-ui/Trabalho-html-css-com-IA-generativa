@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Terra Magna - Alimentação</title>
+  <style>
+    /* ==========================================================================
+       ESTILOS ESPECÍFICOS DA SEÇÃO ALIMENTAÇÃO
+       ========================================================================== */
+    
+    .alimentacao-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .alimentacao-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+      }
+    }
+
+    /* Barras de Nutrientes */
+    .nutrient-bars {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .nutrient-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .nutrient-bar-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+    }
+    .nutrient-bar-track {
+      width: 100%;
+      height: 8px;
+      background-color: var(--color-neutral-300);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    [data-theme="dark"] .nutrient-bar-track {
+      background-color: var(--color-neutral-800);
+    }
+    .nutrient-bar-fill {
+      height: 100%;
+      width: 0%; /* Inicia zerado para animação */
+      background: linear-gradient(90deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+      border-radius: var(--radius-full);
+      transition: width 1.2s var(--ease-bounce);
+      will-change: width;
+    }
+    .nutrient-bar-fill.animated {
+      width: var(--target-width);
+    }
+
+    /* Cards de Pilares (Direita) */
+    .pillar-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .pillar-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      background-color: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: var(--border-sm);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--dur-mid) var(--ease-swift), box-shadow var(--dur-mid) var(--ease-swift);
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Pseudo-elemento da barra dourada lateral */
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background-color: var(--color-gold);
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform var(--dur-mid) var(--ease-swift);
+    }
+    .pillar-card:hover {
+      transform: translateX(8px);
+      box-shadow: var(--shadow-md);
+    }
+    .pillar-card:hover::before {
+      transform: scaleY(1);
+    }
+    
+    .pillar-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+      border-radius: var(--radius-md);
+      color: var(--color-white);
+    }
+    .pillar-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+    
+    .pillar-content h4 {
+      font-size: var(--text-lg);
+      margin-bottom: 0.25em;
+      color: var(--text-primary);
+    }
+    .pillar-content p {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <section id="alimentacao" class="section-alt">
+    <div class="container">
+      <div class="alimentacao-inner">
+        
+        <div class="alimentacao-text">
+          <p class="section-label reveal">Nutrição de Excelência</p>
+          <h2 class="section-title reveal reveal-delay-1">Alimentação Balanceada e Sustentável</h2>
+          <p class="section-desc reveal reveal-delay-2">
+            Na Terra Magna, formulamos nossas próprias rações com grãos selecionados e rigoroso controle de qualidade, garantindo o máximo desenvolvimento do rebanho e o menor impacto ambiental.
+          </p>
+          
+          <div class="nutrient-bars reveal reveal-delay-3" id="nutrient-bars-container">
+            <div class="nutrient-bar-item">
+              <div class="nutrient-bar-header">
+                <span>Proteína Bruta</span>
+                <span aria-hidden="true">22%</span>
+                <span class="sr-only">Nível de Proteína Bruta: 22 por cento</span>
+              </div>
+              <div class="nutrient-bar-track">
+                <div class="nutrient-bar-fill" style="--target-width: 22%;"></div>
+              </div>
+            </div>
+            <div class="nutrient-bar-item">
+              <div class="nutrient-bar-header">
+                <span>Energia Digestível</span>
+                <span aria-hidden="true">85%</span>
+                <span class="sr-only">Nível de Energia Digestível: 85 por cento</span>
+              </div>
+              <div class="nutrient-bar-track">
+                <div class="nutrient-bar-fill" style="--target-width: 85%;"></div>
+              </div>
+            </div>
+            <div class="nutrient-bar-item">
+              <div class="nutrient-bar-header">
+                <span>Fibra Efetiva</span>
+                <span aria-hidden="true">45%</span>
+                <span class="sr-only">Nível de Fibra Efetiva: 45 por cento</span>
+              </div>
+              <div class="nutrient-bar-track">
+                <div class="nutrient-bar-fill" style="--target-width: 45%;"></div>
+              </div>
+            </div>
+            <div class="nutrient-bar-item">
+              <div class="nutrient-bar-header">
+                <span>Minerais Essenciais</span>
+                <span aria-hidden="true">100%</span>
+                <span class="sr-only">Nível de Minerais Essenciais: 100 por cento</span>
+              </div>
+              <div class="nutrient-bar-track">
+                <div class="nutrient-bar-fill" style="--target-width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pillar-cards">
+          <article class="pillar-card reveal reveal-delay-2">
+            <div class="pillar-icon">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            </div>
+            <div class="pillar-content">
+              <h4>Origem Rastreada</h4>
+              <p>Grãos plantados na propriedade, sem aditivos químicos.</p>
+            </div>
+          </article>
+          <article class="pillar-card reveal reveal-delay-3">
+            <div class="pillar-icon">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+            <div class="pillar-content">
+              <h4>Alta Digestibilidade</h4>
+              <p>Processamento focado em maximizar a absorção nutricional.</p>
+            </div>
+          </article>
+          <article class="pillar-card reveal reveal-delay-4">
+            <div class="pillar-icon">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+            </div>
+            <div class="pillar-content">
+              <h4>Impacto Ambiental Zero</h4>
+              <p>Reaproveitamento de resíduos no ciclo produtivo da fazenda.</p>
+            </div>
+          </article>
+          <article class="pillar-card reveal reveal-delay-5">
+            <div class="pillar-icon">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </div>
+            <div class="pillar-content">
+              <h4>Formulações Específicas</h4>
+              <p>Dietas ajustadas para cada fase de desenvolvimento animal.</p>
+            </div>
+          </article>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Configuração do Observer para a animação .reveal e as Barras de Nutrição
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.15
+      };
+
+      const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Ativa os elementos de reveal na tela
+            if (entry.target.classList.contains('reveal')) {
+              entry.target.classList.add('visible');
+            }
+            
+            // Ativa o preenchimento das barras de nutrientes se for o container específico
+            if (entry.target.id === 'nutrient-bars-container') {
+              const bars = entry.target.querySelectorAll('.nutrient-bar-fill');
+              bars.forEach(bar => {
+                bar.classList.add('animated');
+              });
+            }
+            
+            // Para de observar após revelar (opcional para performance)
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Inicia a observação dos elementos .reveal
+      document.querySelectorAll('.reveal').forEach(el => {
+        scrollObserver.observe(el);
+      });
+      
+      // Inicia a observação do container de barras de nutrição
+      const barsContainer = document.getElementById('nutrient-bars-container');
+      if (barsContainer) {
+        scrollObserver.observe(barsContainer);
+      }
+    });
+  </script>
+
+</body>
+</html>
