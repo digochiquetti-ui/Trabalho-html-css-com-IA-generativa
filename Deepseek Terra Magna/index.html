@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Terra Magna – Tipos de Criação</title>
+    <style>
+        /* ------------------------------------------------------------
+           DESIGN SYSTEM – TERRA MAGNA
+           Baseado no Prompt 1 – variáveis, utilitários, tema escuro
+           ------------------------------------------------------------ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            /* Cores primárias */
+            --green-dark: #0A3D2E;
+            --gold: #C8A951;
+            --green-mid: #2C7A5E;
+            --green-light: #4CAF7C;
+
+            /* Neutros */
+            --gray-100: #F5F5F5;
+            --gray-200: #E5E5E5;
+            --gray-300: #D4D4D4;
+            --gray-400: #A3A3A3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --black: #000000;
+            --white: #FFFFFF;
+
+            /* Cores de fundo */
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-100);
+            --bg-card: var(--white);
+            --bg-nav: var(--white);
+            --bg-alt: var(--gray-100);
+
+            /* Cores de texto */
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+
+            /* Bordas e sombras */
+            --border-color: var(--gray-200);
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 16px;
+            --border-radius-full: 9999px;
+
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+            /* Tipografia – Major Third (1.25) */
+            --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+
+            --text-xs: clamp(0.75rem, 0.71rem + 0.18vw, 0.875rem);
+            --text-sm: clamp(0.875rem, 0.83rem + 0.21vw, 1rem);
+            --text-base: clamp(1rem, 0.95rem + 0.24vw, 1.125rem);
+            --text-md: clamp(1.125rem, 1.06rem + 0.29vw, 1.25rem);
+            --text-lg: clamp(1.25rem, 1.17rem + 0.36vw, 1.5rem);
+            --text-xl: clamp(1.5rem, 1.39rem + 0.48vw, 1.875rem);
+            --text-2xl: clamp(1.875rem, 1.71rem + 0.71vw, 2.25rem);
+            --text-3xl: clamp(2.25rem, 2.02rem + 0.96vw, 2.75rem);
+            --text-4xl: clamp(2.75rem, 2.43rem + 1.31vw, 3.5rem);
+            --text-5xl: clamp(3.5rem, 3.04rem + 1.79vw, 4.5rem);
+
+            /* Espaçamento (base 8px) */
+            --space-1: 0.5rem;    /* 8px  */
+            --space-2: 1rem;      /* 16px */
+            --space-3: 1.5rem;    /* 24px */
+            --space-4: 2rem;      /* 32px */
+            --space-5: 2.5rem;    /* 40px */
+            --space-6: 3rem;      /* 48px */
+            --space-8: 4rem;      /* 64px */
+            --space-10: 5rem;     /* 80px */
+            --space-12: 6rem;     /* 96px */
+            --space-16: 8rem;     /* 128px */
+
+            /* Layout */
+            --container-max: 1280px;
+            --breakpoint-sm: 768px;
+            --breakpoint-md: 1024px;
+            --breakpoint-lg: 1280px;
+
+            /* Transições */
+            --dur-fast: 150ms;
+            --dur-mid: 250ms;
+            --dur-slow: 400ms;
+            --ease-swift: cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* TEMA ESCURO */
+        [data-theme="dark"] {
+            --bg-primary: var(--gray-900);
+            --bg-secondary: var(--gray-800);
+            --bg-card: var(--gray-800);
+            --bg-nav: var(--gray-900);
+            --bg-alt: var(--gray-800);
+
+            --text-primary: var(--gray-100);
+            --text-secondary: var(--gray-300);
+            --text-muted: var(--gray-400);
+
+            --border-color: var(--gray-700);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+        }
+
+        /* Classes utilitárias base */
+        .container {
+            max-width: var(--container-max);
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: var(--space-2);
+            padding-right: var(--space-2);
+        }
+
+        .section {
+            padding-top: var(--space-8);
+            padding-bottom: var(--space-8);
+        }
+
+        .section-alt {
+            background-color: var(--bg-alt);
+        }
+
+        .section-label {
+            display: inline-block;
+            font-family: var(--font-sans);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background-color: color-mix(in srgb, var(--gold) 12%, transparent);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--border-radius-full);
+            margin-bottom: var(--space-2);
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: var(--text-3xl);
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin-bottom: var(--space-3);
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--gold);
+            position: relative;
+        }
+
+        .section-desc {
+            font-family: var(--font-sans);
+            font-size: var(--text-md);
+            color: var(--text-secondary);
+            max-width: 48rem;
+        }
+
+        /* Reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity var(--dur-mid) var(--ease-swift), transform var(--dur-mid) var(--ease-swift);
+            will-change: opacity, transform;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.05s; }
+        .reveal-delay-2 { transition-delay: 0.15s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.45s; }
+        .reveal-delay-5 { transition-delay: 0.6s; }
+
+        /* a11y */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+            border-radius: var(--border-radius-sm);
+        }
+
+        /* botões (apenas para referência, não usados diretamente na seção) */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-1);
+            font-family: var(--font-sans);
+            font-weight: 600;
+            padding: 0.625rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            transition: all var(--dur-fast) var(--ease-swift);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        /* ------------------------------------------------------------
+           ESTILOS ESPECÍFICOS – SEÇÃO "TIPOS DE CRIAÇÃO"
+           ------------------------------------------------------------ */
+        #tipos {
+            background-color: var(--bg-primary);
+            transition: background-color var(--dur-mid) ease;
+        }
+
+        .tipos-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto var(--space-8) auto;
+        }
+
+        .tipos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-12);
+        }
+
+        /* CARD base */
+        .tipo-card {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: transform var(--dur-mid) var(--ease-swift), box-shadow var(--dur-mid) var(--ease-swift);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tipo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .tipo-card-header {
+            position: relative;
+            overflow: hidden;
+            padding: var(--space-6) var(--space-5) var(--space-4);
+            color: var(--white);
+        }
+
+        .tipo-card-header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(255,255,200,0.15) 0%, rgba(0,0,0,0.2) 100%);
+            pointer-events: none;
+        }
+
+        .tipo-card--corte .tipo-card-header {
+            background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+        }
+
+        .tipo-card--leite .tipo-card-header {
+            background: linear-gradient(135deg, #0B2B23, #1A4F3C);
+        }
+
+        .tipo-card-badge {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-family: var(--font-sans);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--border-radius-full);
+            letter-spacing: 0.02em;
+            margin-bottom: var(--space-2);
+        }
+
+        .tipo-card-header h3 {
+            font-family: var(--font-serif);
+            font-size: var(--text-2xl);
+            font-weight: 700;
+            margin-bottom: var(--space-1);
+        }
+
+        .tipo-card-header p {
+            font-family: var(--font-sans);
+            font-size: var(--text-sm);
+            opacity: 0.85;
+        }
+
+        .tipo-illustration {
+            padding: var(--space-4) var(--space-5);
+            background: color-mix(in srgb, var(--bg-card) 98%, var(--gold) 2%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tipo-illustration svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .tipo-features {
+            list-style: none;
+            padding: var(--space-5);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--space-3);
+            flex: 1;
+        }
+
+        .tipo-features li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-sans);
+            font-size: var(--text-sm);
+            color: var(--text-primary);
+        }
+
+        .tipo-feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: color-mix(in srgb, var(--gold) 12%, var(--bg-primary));
+            border-radius: var(--border-radius-full);
+            transition: background var(--dur-fast) var(--ease-swift);
+        }
+
+        .tipo-card:hover .tipo-feature-icon {
+            background: color-mix(in srgb, var(--gold) 30%, var(--bg-primary));
+        }
+
+        .tipo-metric {
+            display: flex;
+            justify-content: space-between;
+            gap: var(--space-3);
+            padding: var(--space-4) var(--space-5);
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            font-family: var(--font-sans);
+        }
+
+        .tipo-metric div {
+            text-align: center;
+            flex: 1;
+        }
+
+        .tipo-metric span {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .tipo-metric strong {
+            font-size: var(--text-lg);
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* TABELA COMPARATIVA */
+        .comparison-section {
+            margin-top: var(--space-6);
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-6) var(--space-4);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .comparison-section .section-label {
+            margin-bottom: var(--space-4);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--space-3) var(--space-2);
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-family: var(--font-sans);
+            font-size: var(--text-sm);
+        }
+
+        .comparison-table th {
+            background-color: var(--bg-secondary);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .comparison-table th[scope="col"] {
+            background-color: color-mix(in srgb, var(--green-dark) 8%, var(--bg-secondary));
+            font-family: var(--font-serif);
+            font-size: var(--text-md);
+        }
+
+        .comparison-table tr:hover td {
+            background-color: color-mix(in srgb, var(--gold) 6%, var(--bg-card));
+            transition: background var(--dur-fast) ease;
+        }
+
+        /* badges comparativos */
+        .badge-high, .badge-mid, .badge-low {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--border-radius-full);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-align: center;
+            min-width: 70px;
+        }
+        .badge-high {
+            background: color-mix(in srgb, var(--green-mid) 20%, transparent);
+            color: var(--green-mid);
+            border-left: 2px solid var(--green-mid);
+        }
+        .badge-mid {
+            background: color-mix(in srgb, var(--gold) 20%, transparent);
+            color: var(--gold);
+            border-left: 2px solid var(--gold);
+        }
+        .badge-low {
+            background: color-mix(in srgb, var(--gray-500) 20%, transparent);
+            color: var(--gray-500);
+            border-left: 2px solid var(--gray-500);
+        }
+
+        [data-theme="dark"] .badge-high {
+            background: color-mix(in srgb, var(--green-mid) 30%, #1F2A2A);
+            color: #8BCF9F;
+        }
+        [data-theme="dark"] .badge-mid {
+            background: color-mix(in srgb, var(--gold) 30%, #2A2418);
+            color: #F0CF70;
+        }
+
+        /* Responsividade */
+        @media (min-width: 768px) {
+            .tipos-grid {
+                gap: var(--space-8);
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: var(--space-4);
+            }
+            .tipo-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .tipos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .tipo-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .tipo-features {
+                grid-template-columns: 1fr;
+            }
+            .comparison-table {
+                font-size: var(--text-xs);
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: var(--space-2);
+            }
+            .badge-high, .badge-mid, .badge-low {
+                min-width: 55px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="tipos" aria-label="Tipos de criação bovina" class="section">
+        <div class="container">
+            <div class="tipos-header">
+                <span class="section-label">Pecuária 5.0</span>
+                <h2 class="section-title">Tipos de <em>Criação</em></h2>
+                <p class="section-desc">
+                    Soluções completas que unem genética premium, tecnologia de ponta e respeito à terra.
+                    Escolha o sistema ideal para seu negócio.
+                </p>
+            </div>
+
+            <div class="tipos-grid">
+                <!-- CARD CORTE -->
+                <div class="tipo-card tipo-card--corte reveal">
+                    <div class="tipo-card-header">
+                        <span class="tipo-card-badge">🌟 Criação de Corte</span>
+                        <h3>Boi Terra Magna</h3>
+                        <p>Precisão e sustentabilidade no confinamento de elite</p>
+                    </div>
+                    <div class="tipo-illustration">
+                        <svg width="220" height="110" viewBox="0 0 220 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <rect x="10" y="50" width="200" height="40" fill="#2C7A5E" rx="6" />
+                            <path d="M30 45 L45 30 L60 45 Z" fill="#C8A951" stroke="#AA8C3F" stroke-width="1.2" />
+                            <circle cx="48" cy="58" r="6" fill="#F5F5F5" stroke="#404040" stroke-width="1" />
+                            <circle cx="78" cy="58" r="6" fill="#F5F5F5" stroke="#404040" stroke-width="1" />
+                            <path d="M110 35 L120 42 L130 35 L140 42 L150 35" stroke="#C8A951" stroke-width="2" fill="none" />
+                            <rect x="135" y="60" width="28" height="18" rx="3" fill="#0A3D2E" stroke="#F0CF70" stroke-width="1" />
+                            <path d="M149 68 L154 68 M149 72 L154 72" stroke="#F0CF70" stroke-width="1.5" stroke-linecap="round" />
+                            <path d="M185 55 L195 62 L185 69" stroke="#F5F5F5" fill="none" stroke-width="1.5" />
+                            <ellipse cx="192" cy="72" rx="6" ry="4" fill="#0A3D2E" />
+                        </svg>
+                    </div>
+                    <ul class="tipo-features">
+                        <li><span class="tipo-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="var(--gold)" stroke-linecap="round"/></svg></span> Rastreabilidade via RFID</li>
+                        <li><span class="tipo-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="var(--gold)" stroke-linecap="round"/></svg></span> Pastoreio de precisão</li>
+                        <li><span class="tipo-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="var(--gold)" stroke-linecap="round"/></svg></span> Carne carbono neutro</li>
+                    </ul>
+                    <div class="tipo-metric">
+                        <div><span>Arrobas/ha</span><strong>32@</strong></div>
+                        <div><span>Retorno financeiro</span><strong>+18%</strong></div>
+                    </div>
+                </div>
+
+                <!-- CARD LEITE -->
+                <div class="tipo-card tipo-card--leite reveal reveal-delay-1">
+                    <div class="tipo-card-header">
+                        <span class="tipo-card-badge">🤖 Criação de Leite</span>
+                        <h3>Leite Magna Robotic</h3>
+                        <p>Ordenha robotizada com bem-estar e máxima produtividade</p>
+                    </div>
+                    <div class="tipo-illustration">
+                        <svg width="220" height="110" viewBox="0 0 220 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <rect x="15" y="50" width="80" height="48" fill="#A67B45" rx="4" />
+                            <polygon points="55,25 25,50 85,50" fill="#C8A951" />
+                            <rect x="45" y="70" width="20" height="28" fill="#7C5A3A" />
+                            <circle cx="110" cy="70" r="14" fill="#2C7A5E" stroke="#C8A951" stroke-width="1.5" />
+                            <path d="M110 62 L110 78 M102 70 L118 70" stroke="#F5F5F5" stroke-width="1.5" />
+                            <path d="M165 55 L190 55 L190 75 L165 75 Z" fill="#1F4D3C" rx="4" />
+                            <circle cx="177" cy="65" r="4" fill="#F0CF70" />
+                            <path d="M177 61 L177 69 M173 65 L181 65" stroke="#0A3D2E" stroke-width="1" />
+                            <rect x="160" y="78" width="30" height="12" rx="2" fill="#4A6A5B" />
+                        </svg>
+                    </div>
+                    <ul class="tipo-features">
+                        <li><span class="tipo-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="var(--gold)" stroke-linecap="round"/></svg></span> Ordenha voluntária 24h</li>
+                        <li><span class="tipo-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="var(--gold)" stroke-linecap="round"/></svg></span> Análise de qualidade em tempo real</li>
+                        <li><span class="tipo-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="var(--gold)" stroke-linecap="round"/></svg></span> Conforto térmico automatizado</li>
+                    </ul>
+                    <div class="tipo-metric">
+                        <div><span>Litros/dia</span><strong>38 L</strong></div>
+                        <div><span>Eficiência energética</span><strong>+24%</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEÇÃO COMPARATIVA -->
+            <div class="comparison-section reveal reveal-delay-2">
+                <span class="section-label">Análise comparativa</span>
+                <table class="comparison-table">
+                    <thead>
+                        <tr><th scope="col">Critério</th><th scope="col">Corte</th><th scope="col">Leite</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th scope="row">Rentabilidade</th><td><span class="badge-high">Alta</span></td><td><span class="badge-high">Alta</span></td></tr>
+                        <tr><th scope="row">Investimento</th><td><span class="badge-mid">Médio</span></td><td><span class="badge-high">Elevado</span></td></tr>
+                        <tr><th scope="row">Complexidade</th><td><span class="badge-mid">Médio</span></td><td><span class="badge-high">Alta</span></td></tr>
+                        <tr><th scope="row">Desafio sanitário</th><td><span class="badge-mid">Médio</span></td><td><span class="badge-mid">Médio</span></td></tr>
+                        <tr><th scope="row">Potencial ILPF</th><td><span class="badge-high">Alto</span></td><td><span class="badge-mid">Médio</span></td></tr>
+                        <tr><th scope="row">Adoção IoT</th><td><span class="badge-mid">Médio</span></td><td><span class="badge-high">Alta</span></td></tr>
+                        <tr><th scope="row">Sustentabilidade</th><td><span class="badge-high">Alta</span></td><td><span class="badge-high">Alta</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        (function() {
+            // Ativa a classe .visible nos elementos .reveal com Intersection Observer
+            const revealElements = document.querySelectorAll('.reveal');
+            if (revealElements.length) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15, rootMargin: "0px 0px -20px 0px" });
+                revealElements.forEach(el => observer.observe(el));
+            }
+        })();
+    </script>
+</body>
+</html>
